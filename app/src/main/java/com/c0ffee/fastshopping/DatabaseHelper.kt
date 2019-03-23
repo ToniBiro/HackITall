@@ -53,7 +53,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     fun selectList (name: String) : MutableList<Pair<String, Int> >  {
-        val q = "SELECT __id, DISTINCT name FROM " + name + " ORDER BY name"
+        val q = "SELECT DISTINCT name, __id FROM " + name + " ORDER BY name"
         val c =  db.rawQuery( q, null)
         val l: MutableList <Pair<String, Int> > = arrayListOf()
         if (c.count > 0) {
