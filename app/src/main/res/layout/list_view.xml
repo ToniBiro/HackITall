@@ -16,10 +16,10 @@
             android:layout_height="match_parent">
 
         <TextView
-                android:id="@+id/info_text"
-                android:layout_width="155dp"
-                android:layout_height="86dp"
-                android:text="ceva" tools:text="cevaa"/>
+                android:id="@+id/list_title_text"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="Title"/>
         <Button
                 android:text="Open"
                 android:layout_width="0dp"

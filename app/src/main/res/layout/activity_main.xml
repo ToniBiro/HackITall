@@ -42,7 +42,8 @@
                 app:layout_anchor="@id/list_recycler_view"
                 app:layout_anchorGravity="end|bottom" android:focusable="true"
                 android:layout_margin="40dp"
-                android:background="@color/colorAccentDark"/>
+                android:background="@color/colorAccentDark" app:fabSize="normal"
+                android:onClick="createList"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

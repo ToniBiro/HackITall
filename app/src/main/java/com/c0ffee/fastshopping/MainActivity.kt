@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var db: DatabaseHelper
+    private val lists: ArrayList<ShoppingList> = arrayListOf(ShoppingList("Mancare"), ShoppingList("O lista"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +23,17 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         list_recycler_view.layoutManager = LinearLayoutManager(this)
-        list_recycler_view.adapter = ListAdapter()
+        list_recycler_view.adapter = ListAdapter(lists)
     }
 
     fun openList(view: View) {
         val intent = Intent(this, ShoppingListActivity::class.java)
         startActivity(intent)
+    }
 
+    fun createList(view: View) {
+        lists.add(ShoppingList("Lista #${lists.size + 1}"))
+        list_recycler_view.adapter!!.notifyItemChanged(lists.size - 1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
