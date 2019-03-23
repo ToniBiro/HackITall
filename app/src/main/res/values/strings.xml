@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FastShopping</string>
+    <string name="toolbar_settings">Settings</string>
+    <string name="menu">group_item1</string>
 </resources>
