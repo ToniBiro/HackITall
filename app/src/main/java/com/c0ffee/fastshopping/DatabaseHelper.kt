@@ -3,6 +3,7 @@ package com.c0ffee.fastshopping
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.io.File
 import java.io.FileOutputStream
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -10,6 +11,9 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     init {
         val input = context.assets.open(DATABASE_NAME)
+
+        File(DATABASE_PATH).mkdirs()
+
         val destPath = DATABASE_PATH + DATABASE_NAME
         val output = FileOutputStream(destPath)
         val buffer = ByteArray(1024)
@@ -39,7 +43,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     private companion object {
         const val DATABASE_NAME = "database.db"
-        const val DATABASE_PATH = "/data/data/com/c0ffee/fastshipping/databases/"
+        const val DATABASE_PATH = "/data/data/com.c0ffee.fastshopping/databases/"
         const val DATABASE_VERSION = 1
     }
 }
