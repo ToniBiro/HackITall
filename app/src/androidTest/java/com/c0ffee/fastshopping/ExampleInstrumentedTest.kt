@@ -19,6 +19,7 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
+        val db = DatabaseHelper(appContext)
         assertEquals("com.c0ffee.fastshopping", appContext.packageName)
     }
 }

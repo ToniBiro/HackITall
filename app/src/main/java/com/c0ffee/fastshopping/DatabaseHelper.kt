@@ -1,10 +1,16 @@
 package com.c0ffee.fastshopping
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
+
+
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     private val db: SQLiteDatabase
@@ -37,7 +43,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     override fun close() {
         db.close()
-
         super.close()
     }
 
@@ -45,5 +50,33 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val DATABASE_NAME = "database.db"
         const val DATABASE_PATH = "/data/data/com.c0ffee.fastshopping/databases/"
         const val DATABASE_VERSION = 1
+    }
+
+    fun selectList (name: String) : MutableList<Pair<String, Int> >  {
+        val q = "SELECT __id, name FROM " + name + " ORDER BY name"
+        val c =  db.rawQuery( q, null)
+        val l: MutableList <Pair<String, Int> > = arrayListOf()
+        if (c.count > 0) {
+            c.moveToFirst()
+            do {
+                l.add(Pair(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("__id"))))
+            } while (c.moveToNext())
+            c.close()
+        }
+        return l
+    }
+
+    fun findShops (product_id: Int) : MutableList <Pair<String, Int> > {
+        val q = ""
+        val c =  db.rawQuery( q, null)
+        val l: MutableList <Pair<String, Int> > = arrayListOf()
+        if (c.count > 0) {
+            c.moveToFirst()
+            do {
+                l.add(Pair(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("__id"))))
+            } while (c.moveToNext())
+            c.close()
+        }
+        return l
     }
 }

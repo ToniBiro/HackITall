@@ -12,5 +12,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         db = DatabaseHelper(this)
+
+
+        var s = "Products: \n"
+        val products = db.selectList ("Shops")
+        for (i in products) {
+            s += i.first + " " + i.second.toString() + "\n"
+        }
+        s += "\nShops\n"
+        val shops = db.selectList ("Products")
+        for (i in shops) {
+            s += i.first + " " + i.second.toString() + "\n"
+        }
+        sample_text.text = s
     }
 }
