@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         lateinit var PRODUCT_DB: ProductDatabaseHelper
         lateinit var LIST_DB: ListDatabaseHelper
-        val LISTS: ArrayList<ShoppingList> = ArrayList()
+        var LISTS: ArrayList<ShoppingList> = ArrayList()
         const val MESSAGE_LIST_ID = "com.c0ffee.fastshopping.ceva"
     }
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         PRODUCT_DB = ProductDatabaseHelper(this)
         LIST_DB = ListDatabaseHelper(this)
-
+        LISTS = LIST_DB.read()
         val toolbar = main_toolbar
         setSupportActionBar(toolbar)
 
@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     fun createList(view: View) {
         LISTS.add(ShoppingList("Lista #${LISTS.size + 1}"))
         list_recycler_view.adapter!!.notifyItemChanged(LISTS.size - 1)
+        LIST_DB.onUpdate(LISTS)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

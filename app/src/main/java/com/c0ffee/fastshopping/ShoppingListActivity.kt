@@ -37,7 +37,7 @@ class ShoppingListActivity : AppCompatActivity() {
         textView.setAdapter(adapterAuto)
 
         productList.layoutManager = LinearLayoutManager(this)
-        productList.adapter = ProductAdapter()
+        productList.adapter = ProductAdapter(MainActivity.LISTS[index].items)
     }
 
     fun addProduct(view: View) {
