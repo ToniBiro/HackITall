@@ -21,7 +21,7 @@
                 android:layout_height="30dp"
                 android:text="Title"/>
         <Button
-                android:text="Open"
+                android:text="Deschide listă"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/button2"

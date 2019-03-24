@@ -43,7 +43,7 @@
                 app:layout_anchorGravity="end|bottom" android:focusable="true"
                 android:layout_margin="40dp"
                 android:background="@color/colorAccentDark" app:fabSize="normal"
-                android:onClick="createList"/>
+                android:onClick="createList" android:isScrollContainer="false"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

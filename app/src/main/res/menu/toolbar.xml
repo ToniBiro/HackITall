@@ -7,17 +7,6 @@
           app:showAsAction="always"/>
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
-          android:title="Settings"
-          app:showAsAction="never"/>
-    <group android:id="@+id/group">
-        <item android:id="@+id/group_item1"
-              android:title="group_item1"
-              android:icon="@color/colorAccent" />
-        <item android:id="@+id/group_item2"
-              android:title="group_item2"
-              android:icon="@color/colorAccent" />
-    </group>
 
 
 </menu>

@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     <AutoCompleteTextView
-            android:text="Product name"
+            android:text="Nume produs"
             android:layout_width="0dp"
             android:id="@+id/productAutoComplete"
             android:layout_height="wrap_content" android:scrollbars="vertical"
@@ -35,7 +35,7 @@
             android:layout_marginStart="8dp" app:layout_constraintEnd_toStartOf="@+id/add_button"
             android:layout_marginEnd="8dp"/>
     <Button
-            android:text="Button"
+            android:text="Adaugă în listă"
             android:layout_height="wrap_content" android:id="@+id/add_button" android:layout_weight="1"
             android:layout_width="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
