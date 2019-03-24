@@ -46,10 +46,10 @@ class ProductDatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABAS
         const val DATABASE_VERSION = 1
     }
 
-    fun selectList (name: String) : MutableList<Pair<String, Int> >  {
+    fun selectList (name: String) : MutableList<Pair<String, Int> > {
         val q = "SELECT DISTINCT __id, name FROM " + name + " ORDER BY name"
-        val c =  db.rawQuery( q, null)
-        val l: MutableList <Pair<String, Int> > = arrayListOf()
+        val c = db.rawQuery(q, null)
+        val l: MutableList<Pair<String, Int>> = arrayListOf()
         if (c.count > 0) {
             c.moveToFirst()
             do {
@@ -60,17 +60,11 @@ class ProductDatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABAS
         return l
     }
 
-    fun findShops (product_id: Int) : MutableList <Pair<String, Int> > {
-        val q = ""
+    fun testProduct (name: String) : Boolean {
+        val q = "SELECT __id FROM Products WHERE name = \"" + name.capitalize() +"\";"
         val c =  db.rawQuery( q, null)
-        val l: MutableList <Pair<String, Int> > = arrayListOf()
-        if (c.count > 0) {
-            c.moveToFirst()
-            do {
-                l.add(Pair(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("__id"))))
-            } while (c.moveToNext())
-            c.close()
-        }
-        return l
+        val rez = (c.count > 0)
+        c.close()
+        return rez
     }
 }
