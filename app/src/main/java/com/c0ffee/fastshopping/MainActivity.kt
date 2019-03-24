@@ -12,14 +12,16 @@ class MainActivity : AppCompatActivity() {
     private val lists: ArrayList<ShoppingList> = arrayListOf(ShoppingList("Mancare"), ShoppingList("O lista"))
 
     companion object {
-        lateinit var DB: DatabaseHelper
+        lateinit var PRODUCT_DB: ProductDatabaseHelper
+        lateinit var LIST_DB: ListDatabaseHelper
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DB = DatabaseHelper(this)
+        PRODUCT_DB = ProductDatabaseHelper(this)
+        LIST_DB = ListDatabaseHelper(this)
 
         val toolbar = main_toolbar
         setSupportActionBar(toolbar)

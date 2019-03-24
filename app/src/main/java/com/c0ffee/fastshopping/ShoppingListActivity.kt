@@ -12,7 +12,7 @@ class ShoppingListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_shopping_list)
 
         val spinner = findViewById<Spinner>(R.id.shops_spinner)
-        val shops = MainActivity.DB.selectList ("Shops")
+        val shops = MainActivity.PRODUCT_DB.selectList ("Shops")
         val arraySpinner = shops.map { it.first }.toList()
 
         val adapter = ArrayAdapter(this,
