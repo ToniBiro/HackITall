@@ -1,5 +1,6 @@
 package com.c0ffee.fastshopping
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -57,11 +58,23 @@ class ShoppingListActivity : AppCompatActivity(), AdapterView.OnItemSelectedList
 
     fun addProduct(view: View) {
         val product = productAutoComplete.text.toString()
-        if(MainActivity.PRODUCT_DB.testProduct(product) && MainActivity.LISTS[index].items.indexOf(product) == -1){
+        if (MainActivity.PRODUCT_DB.testProduct(product) && MainActivity.LISTS[index].items.indexOf(product) == -1) {
             MainActivity.LISTS[index].items.add(product)
             MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
             productList.adapter!!.notifyDataSetChanged()
         }
+    }
+    fun openMap(view: View) {
+        val intent = Intent(this, StoreMapActivity::class.java)
+        intent.putExtra(MainActivity.MESSAGE_LIST_ID, index)
+        startActivity(intent)
+    }
+
+    fun deleteProduct(view: View) {
+        val i = productList.findContainingViewHolder(view)!!.adapterPosition
+        MainActivity.LISTS[index].items.removeAt(i)
+        MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
+        productList.adapter!!.notifyDataSetChanged()
     }
 }
 
