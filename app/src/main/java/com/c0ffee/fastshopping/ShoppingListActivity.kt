@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.ViewAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_shopping_list.*
+import kotlinx.android.synthetic.main.product_view.*
 
 class ShoppingListActivity : AppCompatActivity() {
 
@@ -41,7 +42,9 @@ class ShoppingListActivity : AppCompatActivity() {
     }
 
     fun addProduct(view: View) {
-
+        val product_name = productAutoComplete.text.toString()
+        MainActivity.LISTS[index].items.add(product_name)
+        MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
     }
 
     companion object {
