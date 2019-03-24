@@ -1,16 +1,10 @@
 package com.c0ffee.fastshopping
 
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
-
-
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     private val db: SQLiteDatabase
@@ -53,7 +47,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
 
     fun selectList (name: String) : MutableList<Pair<String, Int> >  {
-        val q = "SELECT __id, name FROM " + name + " ORDER BY name"
+        val q = "SELECT DISTINCT __id, name FROM " + name + " ORDER BY name"
         val c =  db.rawQuery( q, null)
         val l: MutableList <Pair<String, Int> > = arrayListOf()
         if (c.count > 0) {
