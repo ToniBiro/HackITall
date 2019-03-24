@@ -21,7 +21,7 @@ class ListDatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_N
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        //db.execSQL("DROP TABLE IF EXISTS \"Lists_Contents\";DROP TABLE IF EXISTS \"Lists\";")
+        //db.execSQL("DROP TABLE Lists_Contents; DROP TABLE Lists;")
         onCreate(db)
     }
 

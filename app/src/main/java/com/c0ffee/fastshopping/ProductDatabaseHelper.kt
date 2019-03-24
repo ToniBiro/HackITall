@@ -67,4 +67,24 @@ class ProductDatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABAS
         c.close()
         return rez
     }
+
+    fun testProductInShop (pr: String, sh: String) : Boolean {
+        val q = "SELECT PS.__id FROM PS INNER JOIN Products ON Products.__id = PS.product_fk AND Products.name = \"" + pr + "\"\n" +
+                "INNER JOIN Shops ON Shops.__id = PS.shop_fk AND Shops.name = \"" + sh + "\";"
+        val c =  db.rawQuery( q, null)
+        val rez = (c.count > 0)
+        c.close()
+        return rez
+    }
+
+    fun getPriceProductInShop (pr: String, sh: String) : Int {
+        val q = "SELECT min (Products.price) as min\n" +
+                "FROM PS INNER JOIN Products ON Products.__id = PS.product_fk AND Products.name = \"" + pr + "\"\n" +
+                "\tINNER JOIN Shops ON Shops.__id = PS.shop_fk AND Shops.name = \"" + sh + "\"\n" +
+                "\tWHERE Products.price IS NOT NULL;"
+        val c =  db.rawQuery( q, null)
+        val rez = c.getColumnIndex("min")
+        c.close()
+        return rez
+    }
 }

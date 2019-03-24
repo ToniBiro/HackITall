@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Spinner
-import android.widget.ViewAnimator
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_shopping_list.*
 import kotlinx.android.synthetic.main.product_view.*
+import kotlinx.android.synthetic.main.product_view.view.*
 
-class ShoppingListActivity : AppCompatActivity() {
+class ShoppingListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private var index : Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,16 +39,29 @@ class ShoppingListActivity : AppCompatActivity() {
         textView.setAdapter(adapterAuto)
 
         productList.layoutManager = LinearLayoutManager(this)
-        productList.adapter = ProductAdapter(MainActivity.LISTS[index].items)
+        productList.adapter = ProductAdapter(this, MainActivity.LISTS[index].items)
+
+        spinner.onItemSelectedListener = this
+    }
+
+    val currentShop: String
+        get() = shops_spinner.selectedItem.toString()
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        productList.adapter!!.notifyDataSetChanged()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        productList.adapter!!.notifyDataSetChanged()
     }
 
     fun addProduct(view: View) {
-        val product_name = productAutoComplete.text.toString()
-        if(MainActivity.PRODUCT_DB.testProduct(product_name)){
-        MainActivity.LISTS[index].items.add(product_name)
-        MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
+        val product = productAutoComplete.text.toString()
+        if(MainActivity.PRODUCT_DB.testProduct(product) && MainActivity.LISTS[index].items.indexOf(product) == -1){
+            MainActivity.LISTS[index].items.add(product)
+            MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
+            productList.adapter!!.notifyDataSetChanged()
         }
-        
-
     }
 }
+
