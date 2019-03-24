@@ -35,7 +35,7 @@
         <android.support.design.widget.FloatingActionButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true" app:srcCompat="@android:drawable/ic_menu_add"
+                android:clickable="true" app:srcCompat="@drawable/plus"
                 android:id="@+id/floatingActionButton"
                 tools:layout_editor_absoluteY="8dp"
                 tools:layout_editor_absoluteX="8dp"
