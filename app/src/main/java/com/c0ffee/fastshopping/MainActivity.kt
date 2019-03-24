@@ -4,11 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val lists: ArrayList<ShoppingList> = arrayListOf(ShoppingList("Mancare"), ShoppingList("O lista"))
 
     companion object {
@@ -21,8 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         DB = DatabaseHelper(this)
 
-        val toolbar = main_toolbar
-        setSupportActionBar(toolbar)
+        setSupportActionBar(main_toolbar)
 
         list_recycler_view.layoutManager = LinearLayoutManager(this)
         list_recycler_view.adapter = ListAdapter(lists)
@@ -34,12 +34,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun createList(view: View) {
+        val listAdapter = list_recycler_view.adapter!! as ListAdapter
         lists.add(ShoppingList("Lista #${lists.size + 1}"))
-        list_recycler_view.adapter!!.notifyItemChanged(lists.size - 1)
+        listAdapter.filter("")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar, menu)
+
+        val searchMenuItem = menu!!.findItem(R.id.action_search)
+        val searchView = searchMenuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+
         return true
     }
+
+    override fun onQueryTextChange(query: String): Boolean {
+        val listAdapter = list_recycler_view.adapter!! as ListAdapter
+        listAdapter.filter(query)
+
+        return false
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean = false
 }
