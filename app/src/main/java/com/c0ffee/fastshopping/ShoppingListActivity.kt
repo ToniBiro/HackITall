@@ -32,8 +32,11 @@ class ShoppingListActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
+        val products = MainActivity.PRODUCT_DB.selectList("Products")
+                .map { it.first }.distinct()
+
         val adapterAuto= ArrayAdapter(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES)
+                android.R.layout.simple_dropdown_item_1line, products)
         val textView = findViewById<AutoCompleteTextView>(R.id.productAutoComplete)
         textView.setAdapter(adapterAuto)
 
@@ -43,11 +46,11 @@ class ShoppingListActivity : AppCompatActivity() {
 
     fun addProduct(view: View) {
         val product_name = productAutoComplete.text.toString()
+        if(MainActivity.PRODUCT_DB.testProduct(product_name)){
         MainActivity.LISTS[index].items.add(product_name)
         MainActivity.LIST_DB.onUpdate(MainActivity.LISTS)
-    }
+        }
+        
 
-    companion object {
-        private val COUNTRIES = arrayOf("Belgium", "France", "Italy", "Germany", "Spain")
     }
 }
