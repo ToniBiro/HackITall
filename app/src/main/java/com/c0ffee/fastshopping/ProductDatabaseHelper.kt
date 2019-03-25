@@ -1,18 +1,12 @@
 package com.c0ffee.fastshopping
 
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
 
-
-
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class ProductDatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     private val db: SQLiteDatabase
 
     init {
@@ -52,10 +46,10 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         const val DATABASE_VERSION = 1
     }
 
-    fun selectList (name: String) : MutableList<Pair<String, Int> >  {
-        val q = "SELECT DISTINCT name, __id FROM " + name + " ORDER BY name"
-        val c =  db.rawQuery( q, null)
-        val l: MutableList <Pair<String, Int> > = arrayListOf()
+    fun selectList (name: String) : MutableList<Pair<String, Int> > {
+        val q = "SELECT DISTINCT __id, name FROM " + name + " ORDER BY name"
+        val c = db.rawQuery(q, null)
+        val l: MutableList<Pair<String, Int>> = arrayListOf()
         if (c.count > 0) {
             c.moveToFirst()
             do {
@@ -66,17 +60,31 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return l
     }
 
-    fun findShops (product_id: Int) : MutableList <Pair<String, Int> > {
-        val q = ""
+    fun testProduct (name: String) : Boolean {
+        val q = "SELECT __id FROM Products WHERE name = \"" + name.capitalize() +"\";"
         val c =  db.rawQuery( q, null)
-        val l: MutableList <Pair<String, Int> > = arrayListOf()
-        if (c.count > 0) {
-            c.moveToFirst()
-            do {
-                l.add(Pair(c.getString(c.getColumnIndex("name")), c.getInt(c.getColumnIndex("__id"))))
-            } while (c.moveToNext())
-            c.close()
-        }
-        return l
+        val rez = (c.count > 0)
+        c.close()
+        return rez
+    }
+
+    fun testProductInShop (pr: String, sh: String) : Boolean {
+        val q = "SELECT PS.__id FROM PS INNER JOIN Products ON Products.__id = PS.product_fk AND Products.name = \"" + pr + "\"\n" +
+                "INNER JOIN Shops ON Shops.__id = PS.shop_fk AND Shops.name = \"" + sh + "\";"
+        val c =  db.rawQuery( q, null)
+        val rez = (c.count > 0)
+        c.close()
+        return rez
+    }
+
+    fun getPriceProductInShop (pr: String, sh: String) : Int {
+        val q = "SELECT min (Products.price) as min\n" +
+                "FROM PS INNER JOIN Products ON Products.__id = PS.product_fk AND Products.name = \"" + pr + "\"\n" +
+                "\tINNER JOIN Shops ON Shops.__id = PS.shop_fk AND Shops.name = \"" + sh + "\"\n" +
+                "\tWHERE Products.price IS NOT NULL;"
+        val c =  db.rawQuery( q, null)
+        val rez = c.getColumnIndex("min")
+        c.close()
+        return rez
     }
 }
